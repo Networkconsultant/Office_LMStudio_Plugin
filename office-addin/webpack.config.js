@@ -1,13 +1,5 @@
 const path = require("path");
-const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-// mkcert-generated certificates (trusted by Windows/Chrome/Edge via local CA)
-const CERTS_DIR = path.resolve(__dirname, "certs");
-const httpsOptions = {
-  key: fs.readFileSync(path.join(CERTS_DIR, "localhost-key.pem")),
-  cert: fs.readFileSync(path.join(CERTS_DIR, "localhost.pem")),
-};
 
 module.exports = {
   entry: {
@@ -43,11 +35,33 @@ module.exports = {
   ],
   devServer: {
     port: 3000,
-    server: {
-      type: "https",
-      options: httpsOptions,
-    },
+    // HTTP only — AllowHTTP=1 is set in the Office registry (HKCU\...\WEF\AllowHTTP)
     headers: { "Access-Control-Allow-Origin": "*" },
     hot: true,
+    // Serve taskpane.html for / and any unmatched route
+    devMiddleware: {
+      index: "taskpane.html",
+    },
+    historyApiFallback: {
+      index: "/taskpane.html",
+      rewrites: [
+        // Don't rewrite /test — let setupMiddlewares handle it
+        { from: /^\/test/, to: "/test" },
+      ],
+    },
+    setupMiddlewares(middlewares, devServer) {
+      // Simple diagnostic page — confirm WebView2 can reach localhost
+      devServer.app.get("/test", (_req, res) => {
+        res.send(`<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>LMStudio AI - Test</title></head>
+<body style="font-family:sans-serif;padding:20px;background:#1a1a2e;color:#eee">
+<h1 style="color:#4CAF50">Server is reachable!</h1>
+<p>If you see this in the Office task pane, the connection is working.</p>
+<p>Time: ${new Date().toISOString()}</p>
+<p><a href="/taskpane.html" style="color:#4fc3f7">Open full add-in</a></p>
+</body></html>`);
+      });
+      return middlewares;
+    },
   },
 };
