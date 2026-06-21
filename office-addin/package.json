@@ -6,14 +6,20 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "dev-server": "webpack serve --mode development --open",
+    "bridge": "node bridge.js",
+    "start:all": "start cmd /k npm run bridge && npm run dev-server",
     "start": "office-addin-debugging start manifest.xml",
     "stop": "office-addin-debugging stop manifest.xml",
     "validate": "office-addin-manifest validate manifest.xml",
     "certs": "office-addin-dev-certs install"
   },
   "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mammoth": "^1.12.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/office-js": "^1.0.396",
@@ -30,5 +36,11 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "bridgeDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mammoth": "^1.6.0",
+    "xlsx": "^0.18.5"
   }
 }

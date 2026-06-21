@@ -3,8 +3,9 @@ import ChatPanel from "./ChatPanel";
 import TextTransform from "./TextTransform";
 import Summarizer from "./Summarizer";
 import FormulaHelper from "./FormulaHelper";
+import FileManager from "./FileManager";
 
-type Tab = "chat" | "transform" | "summarize" | "formula";
+type Tab = "chat" | "transform" | "summarize" | "formula" | "files";
 
 function getHostType(): string {
   if (typeof Office === "undefined" || !Office.context?.host) return "unknown";
@@ -23,6 +24,7 @@ export default function App() {
     { id: "transform", label: "✨ Transform" },
     { id: "summarize", label: "📄 Summarize" },
     ...(isExcel ? [{ id: "formula" as Tab, label: "⚡ Formula" }] : []),
+    { id: "files", label: "📁 Files" },
   ];
 
   return (
@@ -68,6 +70,7 @@ export default function App() {
         {tab === "transform" && <TextTransform baseUrl={baseUrl} />}
         {tab === "summarize" && <Summarizer baseUrl={baseUrl} />}
         {tab === "formula" && isExcel && <FormulaHelper baseUrl={baseUrl} />}
+        {tab === "files" && <FileManager baseUrl={baseUrl} />}
       </main>
     </div>
   );
