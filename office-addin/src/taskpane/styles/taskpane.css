@@ -426,3 +426,56 @@ textarea:focus { outline: none; border-color: #3b82f6; }
   font-size: 11px; padding: 4px 8px; border-radius: 4px;
   background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534;
 }
+
+/* === Chat: document context bar === */
+.doc-context-bar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+  padding: 5px 8px; background: #f8faff;
+  border: 1px solid #dbeafe; border-radius: 6px; flex-shrink: 0;
+}
+.context-badge {
+  font-size: 10px; background: #dbeafe; color: #1e40af;
+  padding: 2px 6px; border-radius: 10px;
+  display: inline-flex; align-items: center; gap: 2px;
+  max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* === DocEditor === */
+.doc-editor-panel { gap: 6px; }
+
+.doc-host-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 10px; border-radius: 6px; color: white;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+}
+.doc-info-badge {
+  font-size: 10px; font-weight: 400; opacity: 0.85;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  max-width: 160px;
+}
+
+.quick-actions {
+  display: flex; gap: 4px; flex-wrap: wrap; flex-shrink: 0;
+}
+.quick-btn {
+  flex: 1; padding: 5px 6px; background: #eff6ff;
+  border: 1px solid #bfdbfe; border-radius: 5px; color: #1e40af;
+  font-size: 11px; cursor: pointer; transition: background 0.1s; white-space: nowrap;
+}
+.quick-btn:hover { background: #dbeafe; }
+
+.doc-preview {
+  font-size: 11px; font-family: monospace; background: #f9fafb;
+  border: 1px solid #e5e7eb; border-radius: 4px; padding: 6px 8px;
+  max-height: 80px; overflow-y: auto; white-space: pre-wrap; color: #374151;
+  line-height: 1.4;
+}
+
+.write-controls {
+  display: flex; flex-direction: column; gap: 4px; margin-top: 4px;
+}
+.write-mode-row {
+  display: flex; gap: 6px; align-items: center;
+}
+.write-btn { margin: 0; }
+
