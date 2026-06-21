@@ -1,0 +1,27 @@
+# Dependencies
+office-addin/node_modules/
+office-addin/dist/
+
+# Certificates (generated locally — never commit private keys)
+office-addin/certs/
+
+# Build logs / debug artifacts
+office-addin/server.log
+office-addin/debug-start.log
+
+# VSTO build output
+vsto/LMStudioAddin/bin/
+vsto/LMStudioAddin/obj/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.user
+*.suo

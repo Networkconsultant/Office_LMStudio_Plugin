@@ -1,0 +1,76 @@
+
+╔══════════════════════════════════════════════════════════════════════╗
+║          LMStudio Office Plugin — Setup Instructions                ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+Prerequisites
+─────────────
+• LMStudio installed and running with "Local Server" enabled (port 1234)
+• Node.js 18+ and npm (for the Office Add-in)
+• Visual Studio 2022 with "Office/SharePoint Development" workload (for VSTO)
+
+═══════════════════════════════════════════════════════════════════════
+OPTION A: Office Add-in  (works on Desktop + Office Online)
+═══════════════════════════════════════════════════════════════════════
+
+1. Install dependencies
+   cd office-addin
+   npm install
+
+2. Install dev HTTPS certificates (first time only)
+   npm run certs
+
+3. Start the dev server
+   npm run dev-server
+   → Opens at https://localhost:3000
+
+4. Sideload the add-in into Office
+   • Word/Excel/PowerPoint:
+       File → Options → Trust Center → Trust Center Settings
+       → Trusted Add-in Catalogs → Add "https://localhost:3000"
+     OR use the npm script:
+       npm start          (auto-sideloads using office-addin-debugging)
+
+5. Using the add-in
+   • A ribbon button "Open AI Assistant" appears in the Home tab
+   • Click it to open the task pane
+   • Use ⚙️ to change the LMStudio server URL if needed
+
+For production deployment:
+   npm run build          → outputs to office-addin/dist/
+   Host dist/ on any HTTPS server and update manifest.xml URLs.
+
+Outlook (separate manifest):
+   Sideload office-addin/manifest-outlook.xml through
+   Outlook → File → Manage Add-ins → Add from file.
+
+═══════════════════════════════════════════════════════════════════════
+OPTION B: VSTO Add-in  (Windows Desktop only, deeper integration)
+═══════════════════════════════════════════════════════════════════════
+
+1. Open vsto/LMStudioAddin.sln in Visual Studio 2022
+
+2. Install NuGet package (optional, for WebView2):
+   Tools → NuGet Package Manager → Console:
+   Install-Package Microsoft.Web.WebView2
+
+3. Build and Run (F5)
+   • VS will deploy and start Word with the add-in loaded
+   • A "LMStudio AI" group appears in the Word Home ribbon
+   • Click "Open AI Assistant" to open the task pane
+
+4. The task pane has three tabs:
+   💬 Chat      — converse with the selected LMStudio model
+   ✨ Transform — rewrite/summarize/translate selected text
+   📄 Summarize — summarize the entire active document
+
+═══════════════════════════════════════════════════════════════════════
+LMStudio Server Configuration
+═══════════════════════════════════════════════════════════════════════
+Default URL: http://localhost:1234/v1
+
+To use a different port or host:
+  • Office Add-in: click ⚙️ in the task pane header
+  • VSTO: change the URL in the settings bar at the top of the pane
+
+Ensure LMStudio has at least one model loaded before opening the add-in.
